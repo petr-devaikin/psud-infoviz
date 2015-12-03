@@ -1,4 +1,4 @@
-int minPopulationToDisplay = 10000;
+int minPopulationToDisplay = 100;
 
 float minX, maxX;
 float minY, maxY;
@@ -10,6 +10,8 @@ Place[] places;
 Place pickedPlace = null;
 
 color darkGray = color(50, 50, 50);
+color blue = color(100, 200, 255);
+color yellow = color(244, 245, 146);
 
 void setup() {
   size(800, 800);
@@ -20,9 +22,7 @@ void draw() {
   background(darkGray);
   
   fill(255);
-  textSize(16);
-  textAlign(LEFT);
-  text("Displaying populations above " + minPopulationToDisplay, 10, 20);
+  drawSlider();
   
   for (int i = 0; i < totalCount; ++i) {
     if (places[i].population > minPopulationToDisplay && pickedPlace != places[i])
@@ -36,11 +36,14 @@ void draw() {
 
 void keyPressed() {
   if (key == CODED) {
-    if (keyCode == UP && minPopulationToDisplay < 10000000) {
+    if (keyCode == RIGHT && minPopulationToDisplay <= 1000000) {
       minPopulationToDisplay *= 10;
-    } else if (keyCode == DOWN && minPopulationToDisplay > 100) {
+    } else if (keyCode == LEFT && minPopulationToDisplay > 1) {
       minPopulationToDisplay /= 10;
     }
+    
+    mouseMoved();
+    
     redraw();
   }
 }
@@ -57,6 +60,12 @@ void mouseMoved() {
   }
 }
 
+void mouseClicked() {
+  if (pickedPlace != null) {
+    pickedPlace.selected = !pickedPlace.selected;
+    redraw();
+  }
+}
 
 void readData() {
   String[] lines = loadStrings("villes.tsv");
@@ -94,11 +103,11 @@ void parseInfo(String line) {
 }
 
 float mapX(float x) {
-  return map(x, minX, maxX, 0, 800);
+  return map(x, minX, maxX, 25, 775);
 }
 
 float mapY(float y) {
-  return map(y, minY, maxY, 800, 0);
+  return map(y, minY, maxY, 800, 50);
 }
 
 Place pick(int px, int py) {

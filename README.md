@@ -2,16 +2,25 @@
 
 ## TO-DO
 1. Cool colors and sizes (check out the book)
-2. Selection of the cities
-3. Show population range as progress bar
-4. 
+4. Drug responce for widget
+
+5. Range slider
+7. Excentric labeling
+8. Pan & zoom
+
 
 
 ## Description
 ### Interaction
-
+Hover the city to see the name.
+Click the city to select it.
+Use keys LEFT and RIGHT ARROW to change the population filter
 
 ### Data encoding
+Value of area represents a population of the city.
+Opacity represents a density of population.
+
+Histogram shows the density of cities by population.
 
 
 ## How to run
