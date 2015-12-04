@@ -38,7 +38,7 @@ class Place {
     }
     else
       fill(blue, alpha);
-    ellipse(mapX(x), mapY(y), 2 * radius, 2 * radius);
+    ellipse(mapX(x), mapY(y), 2 * scaledRadius(), 2 * scaledRadius());
   }
   
   void drawText() {
@@ -47,7 +47,7 @@ class Place {
     
     if (highlighted) {
       fill(darkGray, 150);
-      rect(mapX(x) - textWidth(name) / 2 - 3, mapY(y) - radius - 18, textWidth(name) + 6, 16);
+      rect(mapX(x) - textWidth(name) / 2 - 3, mapY(y) - scaledRadius() - 18, textWidth(name) + 6, 16);
     }
       
     if (highlighted || selected) {
@@ -57,11 +57,15 @@ class Place {
         fill(yellow, 150);
       else
         fill(255);
-      text(name, mapX(x), mapY(y) - radius - 6);
+      text(name, mapX(x), mapY(y) - scaledRadius() - 6);
     }
   }
   
-  boolean contains(int px, int py) {
-    return dist(mapX(x), mapY(y), px, py) <= radius + 1;
+  boolean contains(float px, float py) {
+    return dist(mapX(x), mapY(y), px, py) <= scaledRadius() + 1;
+  }
+  
+  float scaledRadius() {
+    return zoom * radius;
   }
 }

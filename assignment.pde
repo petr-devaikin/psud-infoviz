@@ -13,6 +13,11 @@ color darkGray = color(50, 50, 50);
 color blue = color(100, 200, 255);
 color yellow = color(244, 245, 146);
 
+float translationX = 0,
+    translationY = 0,
+    zoom = 0.5;
+
+
 void setup() {
   size(800, 800);
   readData();
@@ -67,6 +72,25 @@ void mouseClicked() {
   }
 }
 
+void mouseDragged() {
+  translationX += (mouseX - pmouseX) / zoom;
+  translationY += (mouseY - pmouseY) / zoom;
+  redraw();
+}
+
+void mouseWheel(MouseEvent event) {
+  // zoom to cursor
+  translationX -= 1 / zoom * (mouseX - 400);
+  translationY -= 1 / zoom * (mouseY - 400);
+  
+  zoom *= sqrt(1 + float(event.getCount()) / 10);
+  
+  // zoom to cursor
+  translationX += 1 / zoom * (mouseX - 400);
+  translationY += 1 / zoom * (mouseY - 400);
+  redraw();
+}
+
 void readData() {
   String[] lines = loadStrings("villes.tsv");
   parseInfo(lines[0]); // read the header line
@@ -103,14 +127,14 @@ void parseInfo(String line) {
 }
 
 float mapX(float x) {
-  return map(x, minX, maxX, 25, 775);
+  return map(x, minX, maxX, (translationX - 400) * zoom + 400, (translationX + 400) * zoom + 400);
 }
 
 float mapY(float y) {
-  return map(y, minY, maxY, 800, 50);
+  return map(y, minY, maxY, (translationY + 400) * zoom + 400, (translationY - 400) * zoom + 400);
 }
 
-Place pick(int px, int py) {
+Place pick(float px, float py) {
   Place result = null;
   for (int i = totalCount - 1; i >= 0; i--)
     if (places[i].population > minPopulationToDisplay && places[i].contains(px, py)) {

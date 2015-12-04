@@ -6,7 +6,6 @@
 
 5. Range slider
 7. Excentric labeling
-8. Pan & zoom
 
 
 
@@ -15,6 +14,9 @@
 Hover the city to see the name.
 Click the city to select it.
 Use keys LEFT and RIGHT ARROW to change the population filter
+Use mouse drag&drop to pan
+Use mouse wheel to zoom in/out to current cursor position (!).
+Size of labels always remains the same.
 
 ### Data encoding
 Value of area represents a population of the city.
