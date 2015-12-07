@@ -8,7 +8,7 @@ class Place {
   float density;
   
   float radius;
-  float alpha;
+  int fillColor;
   
   boolean highlighted = false;
   boolean selected = false;
@@ -22,43 +22,47 @@ class Place {
     this.surface = surface;
     this.density = surface > 0 ? population / surface : 0;
     
-    radius = 50 * sqrt(population / 2125246);
-    alpha = 50 + 100 * density / 23734.783;
+    radius = 50 * pow(pow(population / maxPopulation, 0.5), 1 / 0.7); // perception of area
+    int fillValue = int(pow(density / maxDensity, 0.33) * densityColors.length); // perception of brightness
+    if (fillValue == densityColors.length)
+      fillValue--;
+    this.fillColor = densityColors[fillValue];
   }
 
   void draw() {
-    drawText();
     drawArea();
   }
   
   void drawArea() {
-    noStroke();
-    if (highlighted) {
-      fill(color(255, 100, 100, alpha));
-    }
+    if (highlighted)
+      stroke(color(255), 150);
     else
-      fill(blue, alpha);
+      noStroke();
+    fill(fillColor);
+    
     ellipse(mapX(x), mapY(y), 2 * scaledRadius(), 2 * scaledRadius());
   }
   
   void drawText() {
+    if (!highlighted && !selected)
+      return;
+      
     textSize(14);
     textAlign(CENTER);
     
-    if (highlighted) {
-      fill(darkGray, 150);
-      rect(mapX(x) - textWidth(name) / 2 - 3, mapY(y) - scaledRadius() - 18, textWidth(name) + 6, 16);
-    }
+    if (highlighted)
+      fill(darkGray, 200);
+    else
+      fill(darkGray, 100);
+     
+    rect(mapX(x) - textWidth(name) / 2 - 3, mapY(y) - scaledRadius() - 18, textWidth(name) + 6, 16);
       
-    if (highlighted || selected) {
-      if (selected && highlighted)
-        fill(yellow);
-      else if (selected) 
-        fill(yellow, 150);
-      else
-        fill(255);
-      text(name, mapX(x), mapY(y) - scaledRadius() - 6);
-    }
+    if (highlighted)
+      fill(255);
+    else
+      fill(210);
+      
+    text(name, mapX(x), mapY(y) - scaledRadius() - 6);
   }
   
   boolean contains(float px, float py) {

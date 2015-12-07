@@ -4,7 +4,7 @@ int sliderMaxValue = 10000000;
   
 void drawSlider() {
   noStroke();
-  fill(yellow, 150);
+  fill(blue);
   rect(
     mapSlider(minPopulationToDisplay),
     45,
@@ -41,10 +41,10 @@ void drawSliderCities() {
   }
   
   noStroke();
-  fill(70);
+  fill(100, 200);
   for (int i = 0; i < histogram.length; i++) {
     if (mapSlider(minPopulationToDisplay) < i * step)
-      fill(yellow, 100);
+      fill(blue, 200);
     rect(i * step, 45, step, -histogram[i] * 0.04);
   } 
 }

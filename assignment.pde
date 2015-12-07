@@ -1,4 +1,4 @@
-int minPopulationToDisplay = 100;
+int minPopulationToDisplay = 1000;
 
 float minX, maxX;
 float minY, maxY;
@@ -9,13 +9,23 @@ float minAltitude, maxAltitude;
 Place[] places;
 Place pickedPlace = null;
 
-color darkGray = color(50, 50, 50);
-color blue = color(100, 200, 255);
-color yellow = color(244, 245, 146);
+color darkGray = color(40);
+color blue = #5ab3e6;
 
 float translationX = 0,
     translationY = 0,
-    zoom = 0.5;
+    zoom = 0.9;
+
+float maxDensity = 23734.783;
+color[] densityColors = {
+#feedde,
+#fdd0a2,
+#fdae6b,
+#fd8d3c,
+#f16913,
+#d94801,
+#8c2d04
+};
 
 
 void setup() {
@@ -26,17 +36,16 @@ void setup() {
 void draw() {
   background(darkGray);
   
-  fill(255);
-  drawSlider();
-  
-  for (int i = 0; i < totalCount; ++i) {
-    if (places[i].population > minPopulationToDisplay && pickedPlace != places[i])
+  for (int i = 0; i < totalCount; ++i)
+    if (places[i].population > minPopulationToDisplay) 
       places[i].draw();
-  }
   
-  // draw picked place on top
-  if (pickedPlace != null)
-    pickedPlace.draw();
+  // text on top
+  for (int i = 0; i < totalCount; ++i)
+    if (places[i].population > minPopulationToDisplay) 
+      places[i].drawText();
+    
+  drawSlider();
 }
 
 void keyPressed() {
