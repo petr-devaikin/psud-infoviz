@@ -23,10 +23,10 @@ class Place {
     this.density = surface > 0 ? population / surface : 0;
     
     radius = 50 * pow(pow(population / maxPopulation, 0.5), 1 / 0.7); // perception of area
-    int fillValue = int(pow(density / maxDensity, 0.33) * densityColors.length); // perception of brightness
+    int fillValue = int(pow(1 - density / maxDensity, 1 / 0.33) * densityColors.length); // perception of brightness
     if (fillValue == densityColors.length)
       fillValue--;
-    this.fillColor = densityColors[fillValue];
+    this.fillColor = densityColors[densityColors.length - 1 - fillValue];
   }
 
   void draw() {
