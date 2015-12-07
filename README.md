@@ -15,9 +15,9 @@ Use mouse wheel to zoom in/out to current cursor position (!).
 Size of labels always remains the same.
 
 ### Data encoding
-Value of area represents a population of the city (size - power of 0.7 [2]).
+Size of area represents a population of the city (size perception correction - power of 0.7 [2]).
 
-Color represents a density of population (7 levels from light to dark orange [3], brightness - power of 0.33 [2]).
+Color brightness represents a density of population: 7 levels from light orange (low density) to dark orange (high density) [3], (brightness perception correction - power of 0.33 [2]).
 
 Histogram shows the density of cities by population.
 
